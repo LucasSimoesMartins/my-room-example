@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">My Room Example</string>
+
+    <string name="name">Name</string>
+    <string name="phone">Phone number</string>
+    <string name="email">E-mail</string>
+    <string name="save_student">Save student</string>
+    <string name="remove">Remove</string>
+    <string name="student_list">Student List</string>
+
+</resources>
