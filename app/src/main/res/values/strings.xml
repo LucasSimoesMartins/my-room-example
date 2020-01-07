@@ -4,8 +4,10 @@
     <string name="name">Name</string>
     <string name="phone">Phone number</string>
     <string name="email">E-mail</string>
-    <string name="save_student">Save student</string>
+    <string name="save">Save</string>
     <string name="remove">Remove</string>
     <string name="student_list">Student List</string>
+    <string name="add_new_student">Add New Student</string>
+    <string name="edit_student">Edit Student</string>
 
 </resources>

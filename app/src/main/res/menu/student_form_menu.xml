@@ -5,5 +5,5 @@
     <item android:id="@+id/btnSaveMenuStudentForm"
         app:showAsAction="always"
         android:icon="@drawable/ic_save_student"
-        android:title="@string/save_student"/>
+        android:title="@string/save"/>
 </menu>

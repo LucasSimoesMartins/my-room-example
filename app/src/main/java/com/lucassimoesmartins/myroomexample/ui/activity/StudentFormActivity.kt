@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import com.lucassimoesmartins.myroomexample.R
+import com.lucassimoesmartins.myroomexample.asynctask.EditStudentTask
 import com.lucassimoesmartins.myroomexample.asynctask.SaveStudentTask
 import com.lucassimoesmartins.myroomexample.constants.Constants
 import com.lucassimoesmartins.myroomexample.database.StudentDatabase
@@ -14,14 +15,31 @@ import kotlinx.android.synthetic.main.activity_student_form.*
 
 class StudentFormActivity : AppCompatActivity() {
 
-    lateinit var studentDao: StudentDao
-    lateinit var student: Student
+    private lateinit var studentDao: StudentDao
+    private lateinit var student: Student
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_student_form)
 
         setUI()
+    }
+
+    private fun setUI() {
+
+        studentDao = StudentDatabase.getInstance(this)!!.getStudentDao()
+
+        if (intent.hasExtra(Constants.STUDENT_KEY)) {
+            title = getString(R.string.edit_student)
+            student = intent.getSerializableExtra(Constants.STUDENT_KEY) as Student
+
+            edtStudentName.setText(student.name)
+            edtStudentPhone.setText(student.phone)
+            edtStudentEmail.setText(student.email)
+        } else {
+            title = getString(R.string.add_new_student)
+            student = Student()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -44,7 +62,7 @@ class StudentFormActivity : AppCompatActivity() {
         student.phone = edtStudentPhone.text.toString()
         student.email = edtStudentEmail.text.toString()
 
-        if(student.id > 0) {
+        if (student.id > 0) {
             editStudent()
         } else {
             saveStudent()
@@ -52,28 +70,14 @@ class StudentFormActivity : AppCompatActivity() {
     }
 
     private fun saveStudent() {
-
-        SaveStudentTask(studentDao, student, fun(){
+        SaveStudentTask(studentDao, student, fun() {
             finish()
         }).execute()
     }
 
     private fun editStudent() {
-
-    }
-
-    private fun setUI() {
-        val database: StudentDatabase = StudentDatabase.getInstance(this)!!
-        studentDao = database.getStudentDao()
-
-        if (intent.hasExtra(Constants.STUDENT_KEY)) {
-            student = intent.getSerializableExtra(Constants.STUDENT_KEY) as Student
-
-            edtStudentName.setText(student.name)
-            edtStudentPhone.setText(student.phone)
-            edtStudentEmail.setText(student.email)
-        } else {
-            student = Student()
-        }
+        EditStudentTask(studentDao, student, fun() {
+            finish()
+        }).execute()
     }
 }

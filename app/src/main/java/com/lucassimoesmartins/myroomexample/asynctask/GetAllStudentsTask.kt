@@ -5,8 +5,8 @@ import com.lucassimoesmartins.myroomexample.database.dao.StudentDao
 import com.lucassimoesmartins.myroomexample.model.Student
 
 class GetAllStudentsTask(
-    val studentDao: StudentDao,
-    val delegate : (List<Student>) -> Unit
+    private val studentDao: StudentDao,
+    private val delegate : (List<Student>) -> Unit
 ) : AsyncTask<Void, Void, List<Student>>() {
 
     override fun doInBackground(vararg params: Void?): List<Student> {
